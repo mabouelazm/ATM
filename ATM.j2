@@ -1,0 +1,28 @@
+
+interface Cellular0
+ip address nego
+ip verify unicast reverse-path
+encapsulation SLIP
+dialer in-band
+dialer string gsm
+dialer-group 1
+async mode interactive
+access-list 1 permit any
+dialer-list 1 protocol ip list 1
+
+
+interface Tunnel4
+description ***GPRS Tunnel***
+ip address {{ip}} 255.255.0.0
+ip nhrp authentication efinance
+ip nhrp map 172.39.0.1 10.236.7.98
+ip nhrp network-id 2526
+ip nhrp nhs 172.39.0.1
+ip nhrp cache non-authoritative
+tunnel source Cellular0
+tunnel destination 10.236.7.98
+tunnel key 2526
+tunnel protection ipsec profile ATM
+
+ ip route 10.236.7.98 255.255.255.255 Cellular0
+!
